@@ -7,4 +7,7 @@ import androidx.room.Query
 interface WordDAO {
     @Query("SELECT * FROM word_data_table")
     fun getAll(): List<Word>
+
+    @Query("SELECT * FROM word_data_table ORDER BY RANDOM() LIMIT 10")
+    fun getRandomWords(): List<Word>
 }

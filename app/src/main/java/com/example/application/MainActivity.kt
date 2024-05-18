@@ -2,6 +2,7 @@ package com.example.application
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
@@ -23,7 +24,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var database: WordDatabase
+    //private lateinit var database: WordDatabase
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,15 +45,18 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        GlobalScope.launch(Dispatchers.IO) {
-            database = Room.databaseBuilder(applicationContext, WordDatabase::class.java, "english_words")
-                .createFromAsset("database/english_words.db")
-                .build()
-
-            val wordDAO = database.wordDAO()
-            val words: List<Word> = wordDAO.getAll()
-
-            Log.d("RRR", words[0].wordEnglish + " " + words[0].wordRussian)
-        }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            database = Room.databaseBuilder(applicationContext, WordDatabase::class.java, "english_words")
+//                .createFromAsset("database/english_words.db")
+//                .build()
+//
+//            val wordDAO = database.wordDAO()
+//            val words = wordDAO.getRandomWords()
+//
+//            Log.d("RRR", words.toString())
+//
+//            //val viewModel: MainViewModel by viewModels()
+//            //viewModel.setWords(words)
+//        }
     }
 }
