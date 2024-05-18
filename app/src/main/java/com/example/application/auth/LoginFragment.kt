@@ -63,7 +63,7 @@ class LoginFragment : Fragment() {
         regBtn.setOnClickListener {
             if (email.text.toString().isEmpty() || password.text.toString().isEmpty()) {
                 Log.d("RRR", "Пусто!")
-                Snackbar.make(view, "Поля не заполнены", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(view, "Поля не заполнены!", Snackbar.LENGTH_LONG).show();
             } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email.text.toString()).matches()) {
                 Snackbar.make(view, "Неверный адрес электронной почты", Snackbar.LENGTH_LONG).show();
             } else if (password.text.toString().length < 6) {

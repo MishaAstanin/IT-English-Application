@@ -1,5 +1,6 @@
 package com.example.application.ui.dashboard
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ class DashboardFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,6 +37,11 @@ class DashboardFragment : Fragment() {
         val textView: TextView = binding.textDashboard
         dashboardViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
+        }
+
+        val textView2: TextView = binding.newTests
+        dashboardViewModel.newTest.observe(viewLifecycleOwner) {
+            textView2.text = it
         }
 
         val beginTestButton : Button = binding.beginButton
