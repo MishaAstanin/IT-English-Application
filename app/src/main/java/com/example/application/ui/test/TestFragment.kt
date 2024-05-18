@@ -15,6 +15,7 @@ import com.example.application.data.Word
 import com.example.application.data.WordDatabase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -44,6 +45,8 @@ class TestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val firestore = FirebaseFirestore.getInstance()
 
         questionField = view.findViewById(R.id.question)
         resultField = view.findViewById(R.id.result)
@@ -88,6 +91,24 @@ class TestFragment : Fragment() {
                     updateUI(words)
 
                 } else {
+                    if(FirebaseAuth.getInstance().currentUser != null) {
+                        firestore.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).get()
+                            .addOnSuccessListener {
+                                var tests = it.getDouble("tests")!!.toInt()
+                                var answers = it.getDouble("answers")!!.toInt()
+                                tests++
+                                answers += count.text.toString().toInt()
+
+                                firestore.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).update(
+                                    mapOf(
+                                        "tests" to tests,
+                                        "answers" to answers
+                                    )
+                                )
+
+                                Log.d("RRR", "$tests $answers")
+                            }
+                    }
                     findNavController().navigate(R.id.action_testFragment_to_navigation_dashboard)
                 }
             }

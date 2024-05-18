@@ -14,6 +14,9 @@ import com.example.application.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 
 
 class LoginFragment : Fragment() {
@@ -32,6 +35,9 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val firestore = FirebaseFirestore.getInstance()
+        //firestore.collection("users")
+
         email = view.findViewById(R.id.email_et)
         password = view.findViewById(R.id.password_et)
         loginBtn = view.findViewById(R.id.login_btn)
@@ -45,6 +51,7 @@ class LoginFragment : Fragment() {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener {
                         if(it.isSuccessful) {
+                            Snackbar.make(view, "Вы успешно вошли", Snackbar.LENGTH_LONG).show();
                             findNavController().navigate(R.id.action_loginFragment_to_navigation_notifications)
                         } else {
                             Snackbar.make(view, "Ошибка входа в аккаунт!", Snackbar.LENGTH_LONG).show();
@@ -65,6 +72,11 @@ class LoginFragment : Fragment() {
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email.text.toString(), password.text.toString())
                     .addOnCompleteListener {
                         if(it.isSuccessful) {
+                            val userData = hashMapOf(
+                                "tests" to 0,
+                                "answers" to 0
+                            )
+                            firestore.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).set(userData)
                             Snackbar.make(view, "Вы успешно зарегистрированы!", Snackbar.LENGTH_LONG).show();
                             findNavController().navigate(R.id.action_loginFragment_to_navigation_notifications)
                         } else {

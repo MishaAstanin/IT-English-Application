@@ -21,6 +21,9 @@ class NotificationsFragment : Fragment() {
 
     private lateinit var logoutBtn: Button
     private lateinit var userName: TextView
+    private lateinit var userTest: TextView
+    private lateinit var userAnswer: TextView
+    private lateinit var userPercent: TextView
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -47,10 +50,26 @@ class NotificationsFragment : Fragment() {
             userName.text = it
         }
 
+        userTest = binding.tests
+        notificationsViewModel.tests.observe(viewLifecycleOwner) {
+            userTest.text = it
+        }
+
+        userAnswer = binding.answers
+        notificationsViewModel.answers.observe(viewLifecycleOwner) {
+            userAnswer.text = it
+        }
+
+        userPercent = binding.percent
+        notificationsViewModel.percent.observe(viewLifecycleOwner) {
+            userPercent.text = it
+        }
+
         if(FirebaseAuth.getInstance().currentUser == null) {
             findNavController().navigate(R.id.action_navigation_notifications_to_loginFragment)
         } else {
             notificationsViewModel.setUserEmail()
+            notificationsViewModel.setUserData()
         }
 
         return root
