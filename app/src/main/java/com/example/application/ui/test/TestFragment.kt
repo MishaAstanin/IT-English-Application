@@ -13,6 +13,8 @@ import androidx.room.Room
 import com.example.application.R
 import com.example.application.data.Word
 import com.example.application.data.WordDatabase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
