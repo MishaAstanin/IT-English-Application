@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.application.MainActivity
 import com.example.application.R
@@ -17,11 +19,14 @@ import com.example.application.data.WordDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class TestFragment : Fragment() {
     private lateinit var database: WordDatabase
 
     private lateinit var questionField: TextView
+    private lateinit var resultField: TextView
+    private lateinit var count: TextView
     private lateinit var variant1: Button
     private lateinit var variant2: Button
     private lateinit var variant3: Button
@@ -29,6 +34,8 @@ class TestFragment : Fragment() {
     private lateinit var nextBtn: Button
 
     private lateinit var currentWord: Word
+    private var currentWordIndex = 0
+    private var rightAnswers = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +47,10 @@ class TestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         questionField = view.findViewById(R.id.question)
+        resultField = view.findViewById(R.id.result)
+        resultField.text = "Выберете правильный перевод:"
+        count = view.findViewById(R.id.count)
+        count.text = rightAnswers.toString()
         variant1 = view.findViewById(R.id.variant1)
         variant2 = view.findViewById(R.id.variant2)
         variant3 = view.findViewById(R.id.variant3)
@@ -59,16 +70,108 @@ class TestFragment : Fragment() {
             requireActivity().runOnUiThread {
                 updateUI(words)
             }
+
+            nextBtn.setOnClickListener {
+                if(currentWordIndex == words.size - 2) {
+                    nextBtn.text = "Завершить"
+                }
+                if (currentWordIndex < words.size - 1) {
+
+                    variant1.isEnabled = true
+                    variant2.isEnabled = true
+                    variant3.isEnabled = true
+                    variant4.isEnabled = true
+
+                    resultField.text = "Выберете правильный перевод:"
+
+                    currentWordIndex++
+                    updateUI(words)
+                    Log.d("RRR", currentWordIndex.toString())
+                } else {
+                    Log.d("RRR", "Стоп")
+                    findNavController().navigate(R.id.action_testFragment_to_navigation_dashboard)
+                }
+            }
+        }
+
+        variant1.setOnClickListener {
+            variant2.isEnabled = false
+            variant3.isEnabled = false
+            variant4.isEnabled = false
+            if(variant1.text.toString() == currentWord.wordRussian) {
+                Log.d("RRR", "Правильно")
+                resultField.text = "Правильно"
+                rightAnswers++
+            } else {
+                resultField.text = "Неправильно"
+            }
+            count.text = rightAnswers.toString()
+        }
+        variant2.setOnClickListener {
+            variant1.isEnabled = false
+            variant3.isEnabled = false
+            variant4.isEnabled = false
+            if(variant2.text.toString() == currentWord.wordRussian) {
+                Log.d("RRR", "Правильно")
+                resultField.text = "Правильно"
+                rightAnswers++
+            } else {
+                resultField.text = "Неправильно"
+            }
+            count.text = rightAnswers.toString()
+        }
+        variant3.setOnClickListener {
+            variant1.isEnabled = false
+            variant2.isEnabled = false
+            variant4.isEnabled = false
+            if(variant3.text.toString() == currentWord.wordRussian) {
+                Log.d("RRR", "Правильно")
+                resultField.text = "Правильно"
+                rightAnswers++
+            } else {
+                resultField.text = "Неправильно"
+            }
+            count.text = rightAnswers.toString()
+        }
+        variant4.setOnClickListener {
+            variant1.isEnabled = false
+            variant2.isEnabled = false
+            variant3.isEnabled = false
+            if(variant4.text.toString() == currentWord.wordRussian) {
+                Log.d("RRR", "Правильно")
+                resultField.text = "Правильно"
+                rightAnswers++
+            } else {
+                resultField.text = "Неправильно"
+            }
+            count.text = rightAnswers.toString()
         }
     }
 
     private fun updateUI(words: List<Word>) {
-        currentWord = words[0]
+        currentWord = words[currentWordIndex]
         questionField.text = currentWord.wordEnglish
 
-        variant1.text = words[0].wordRussian
-        variant2.text = words[1].wordRussian
-        variant3.text = words[2].wordRussian
-        variant4.text = words[3].wordRussian
+        val filteredList = words.toMutableList().apply { removeAt(currentWordIndex) }
+        val randomIndices = mutableListOf<Int>()
+        while (randomIndices.size < 3) {
+            val randomIndex = Random.nextInt(filteredList.size)
+            if (!randomIndices.contains(randomIndex)) {
+                randomIndices.add(randomIndex)
+            }
+        }
+        randomIndices.map { filteredList[it] }.toList()
+
+        var answers : List<String> = listOf(filteredList[randomIndices[0]].wordRussian,
+            filteredList[randomIndices[1]].wordRussian,
+            filteredList[randomIndices[2]].wordRussian,
+            currentWord.wordRussian)
+        answers = answers.shuffled()
+        Log.d("RRR", answers.toString())
+
+        variant1.text = answers[0]
+        variant2.text = answers[1]
+        variant3.text = answers[2]
+        variant4.text = answers[3]
     }
 }

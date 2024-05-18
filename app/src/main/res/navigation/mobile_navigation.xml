@@ -30,5 +30,9 @@
         android:id="@+id/testFragment"
         android:name="com.example.application.ui.test.TestFragment"
         android:label="fragment_test2"
-        tools:layout="@layout/fragment_test" />
+        tools:layout="@layout/fragment_test" >
+        <action
+            android:id="@+id/action_testFragment_to_navigation_dashboard"
+            app:destination="@id/navigation_dashboard" />
+    </fragment>
 </navigation>
