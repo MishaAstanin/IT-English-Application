@@ -26,6 +26,7 @@ class TestFragment : Fragment() {
 
     private lateinit var questionField: TextView
     private lateinit var resultField: TextView
+    private lateinit var rightAnswer:TextView
     private lateinit var count: TextView
     private lateinit var variant1: Button
     private lateinit var variant2: Button
@@ -50,9 +51,10 @@ class TestFragment : Fragment() {
 
         questionField = view.findViewById(R.id.question)
         resultField = view.findViewById(R.id.result)
+        rightAnswer = view.findViewById(R.id.right_answer)
         resultField.text = "Выберете правильный перевод:"
         count = view.findViewById(R.id.count)
-        count.text = rightAnswers.toString()
+        count.text = "Верных ответов: " + rightAnswers.toString()
         variant1 = view.findViewById(R.id.variant1)
         variant2 = view.findViewById(R.id.variant2)
         variant3 = view.findViewById(R.id.variant3)
@@ -125,8 +127,9 @@ class TestFragment : Fragment() {
                 rightAnswers++
             } else {
                 resultField.text = "Неправильно"
+                rightAnswer.text = "Верно: " + currentWord.wordRussian
             }
-            count.text = rightAnswers.toString()
+            count.text = "Верных ответов: " + rightAnswers.toString()
         }
         variant2.setOnClickListener {
             variant1.isEnabled = false
@@ -139,8 +142,9 @@ class TestFragment : Fragment() {
                 rightAnswers++
             } else {
                 resultField.text = "Неправильно"
+                rightAnswer.text = "Верно: " + currentWord.wordRussian
             }
-            count.text = rightAnswers.toString()
+            count.text = "Верных ответов: " + rightAnswers.toString()
         }
         variant3.setOnClickListener {
             variant1.isEnabled = false
@@ -153,8 +157,9 @@ class TestFragment : Fragment() {
                 rightAnswers++
             } else {
                 resultField.text = "Неправильно"
+                rightAnswer.text = "Верно: " + currentWord.wordRussian
             }
-            count.text = rightAnswers.toString()
+            count.text = "Верных ответов: " + rightAnswers.toString()
         }
         variant4.setOnClickListener {
             variant1.isEnabled = false
@@ -167,8 +172,9 @@ class TestFragment : Fragment() {
                 rightAnswers++
             } else {
                 resultField.text = "Неправильно"
+                rightAnswer.text = "Верно: " + currentWord.wordRussian
             }
-            count.text = rightAnswers.toString()
+            count.text = "Верных ответов: " + rightAnswers.toString()
         }
     }
 

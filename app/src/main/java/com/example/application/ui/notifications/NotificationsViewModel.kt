@@ -9,7 +9,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 class NotificationsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "Здесь отображается Ваша статистика"
     }
     val text: LiveData<String> = _text
 
@@ -20,7 +20,7 @@ class NotificationsViewModel : ViewModel() {
     val percent = MutableLiveData<String>()
     fun setUserEmail() {
         if (FirebaseAuth.getInstance().currentUser != null) {
-            email.value = FirebaseAuth.getInstance().currentUser!!.email
+            email.value = "Пользователь: " + FirebaseAuth.getInstance().currentUser!!.email
         }
     }
     fun setUserData() {
@@ -31,9 +31,9 @@ class NotificationsViewModel : ViewModel() {
                     val a = it.getDouble("answers")!!.toDouble()
                     val number = (a / (t * 10)) * 100
 
-                    percent.value = (Math.round(number * 100.0) / 100.0).toString()
-                    tests.value = t!!.toInt().toString()
-                    answers.value = a!!.toInt().toString()
+                    percent.value = "Процент правильных ответов: " + (Math.round(number * 100.0) / 100.0).toString() + "%"
+                    tests.value = "Пройдено тестов: " + t.toInt().toString()
+                    answers.value = "Правильных ответов: " + a.toInt().toString()
 
                 }
         }

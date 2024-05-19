@@ -14,4 +14,5 @@
     <string name="textimage">TextImage</string>
     <string name="login_btn_text">Вход</string>
     <string name="reg_btn_text">Регистрация</string>
+    <string name="next_btn">Далее</string>
 </resources>
