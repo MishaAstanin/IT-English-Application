@@ -88,6 +88,7 @@ class TestFragment : Fragment() {
                     variant4.isEnabled = true
 
                     resultField.text = "Выберете правильный перевод:"
+                    rightAnswer.text = ""
 
                     currentWordIndex++
                     updateUI(words)
@@ -99,7 +100,7 @@ class TestFragment : Fragment() {
                                 var tests = it.getDouble("tests")!!.toInt()
                                 var answers = it.getDouble("answers")!!.toInt()
                                 tests++
-                                answers += count.text.toString().toInt()
+                                answers += count.text.toString().replace("Верных ответов: ", "").toInt()
 
                                 firestore.collection("users").document(FirebaseAuth.getInstance().currentUser!!.uid).update(
                                     mapOf(

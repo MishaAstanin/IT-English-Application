@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.application.R
 import com.google.android.material.snackbar.Snackbar
@@ -85,5 +86,12 @@ class LoginFragment : Fragment() {
                     }
             }
         }
+
+        val callback = object : OnBackPressedCallback(true /* enabled */) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_loginFragment_to_navigation_home)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 }
