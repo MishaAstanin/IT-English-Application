@@ -26,6 +26,15 @@
 1. Загрузите APK-файл из папки LoadingApp/ на устройство.
 2. Установите приложение, следуя инструкциям на экране.
 
+## Скриншоты приложения
+<div align="center">
+  <img src="https://github.com/MishaAstanin/IT-English-Application/assets/118374875/3a5cdd90-3662-47ee-9ec9-49b90935a266">
+  <img src="https://github.com/MishaAstanin/IT-English-Application/assets/118374875/9a590ed2-b90b-40b3-a2ae-5d5ed853898b">
+  <img src="https://github.com/MishaAstanin/IT-English-Application/assets/118374875/b0cd00b0-8f38-4b13-ac9a-b65f18ebfae0">
+  <img src="https://github.com/MishaAstanin/IT-English-Application/assets/118374875/6d337449-a353-4108-8840-f437cd447885">
+  <img src="https://github.com/MishaAstanin/IT-English-Application/assets/118374875/be8133bb-e8ff-490d-818f-6d5e4c345470">
+</div>
+
 ## Связь
 
 Если у вас есть вопросы или предложения по проекту, не стесняйтесь обращаться к нам через систему issue на GitHub.
